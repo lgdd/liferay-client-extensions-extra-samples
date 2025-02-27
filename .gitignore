@@ -5,6 +5,7 @@
 **/.sass-cache
 **/.settings
 **/*.log
+**/*.venv
 **/bin
 **/build
 **/build_gradle

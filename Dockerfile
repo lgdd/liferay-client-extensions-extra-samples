@@ -28,6 +28,7 @@ WORKDIR /home/liferay/workspace
 COPY --chown=liferay:liferay . client-extensions
 
 RUN sed -i -e 's/localhost:8126/etc-golang:8126/g' client-extensions/etc-golang/client-extension.yaml
+RUN sed -i -e 's/localhost:8502/etc-python-fastapi:8502/g' client-extensions/etc-python-fastapi/client-extension.yaml
 
 RUN ./gradlew initBundle
 RUN ./gradlew clean deploy -PnodeDownload=false

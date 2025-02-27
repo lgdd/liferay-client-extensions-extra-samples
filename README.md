@@ -1,6 +1,7 @@
 # Liferay Client Extensions Extra Samples
 
-Unofficial additional client extensions samples to complete the official samples that are mirrored in [this repository](https://github.com/lgdd/liferay-client-extensions-samples).
+Unofficial additional client extensions samples to complete the official samples that are mirrored
+in [this repository](https://github.com/lgdd/liferay-client-extensions-samples).
 
 ## Usage
 
@@ -10,6 +11,7 @@ Or you can clone this repository and directly use `docker compose up --build` to
 
 ## The samples
 
-| **Name**   | **Port**     | **Description**                                                                                            |
-|------------|--------------|------------------------------------------------------------------------------------------------------------|
-| etc-golang | 8126         | Go server using the built-in HTTP server package and [lestrrat-go/jwx](https://github.com/lestrrat-go/jwx) |
+| **Name**           | **Port** | **Description**                                                                                                         |
+|--------------------|----------|-------------------------------------------------------------------------------------------------------------------------|
+| etc-golang         | 8126     | Go microservice using the built-in HTTP server package and [lestrrat-go/jwx](https://github.com/lestrrat-go/jwx)        |
+| etc-python-fastapi | 8502     | Python microservice using [FastAPI](https://fastapi.tiangolo.com/) and [PyJWT](https://pyjwt.readthedocs.io/en/stable/) |

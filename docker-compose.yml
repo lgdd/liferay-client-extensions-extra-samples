@@ -16,3 +16,16 @@ services:
     depends_on:
       liferay:
         condition: service_healthy
+  etc-python-fastapi:
+    build:
+      dockerfile: Dockerfile
+      context: etc-python-fastapi
+    ports:
+      - "8502:8502"
+    environment:
+      PROJECT_PROTOCOL: http
+      PROJECT_HOSTNAME: etc-python-fastapi
+      PROJECT_PORT: 8502
+    depends_on:
+      liferay:
+        condition: service_healthy
