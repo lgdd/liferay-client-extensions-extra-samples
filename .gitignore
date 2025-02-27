@@ -6,6 +6,7 @@
 **/.settings
 **/*.log
 **/*.venv
+**/*__pycache__
 **/bin
 **/build
 **/build_gradle
