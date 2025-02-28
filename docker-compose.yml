@@ -29,3 +29,12 @@ services:
     depends_on:
       liferay:
         condition: service_healthy
+  etc-java-vertx:
+    build:
+      dockerfile: Dockerfile
+      context: etc-java-vertx
+    ports:
+      - "8082:8082"
+    depends_on:
+      liferay:
+        condition: service_healthy
