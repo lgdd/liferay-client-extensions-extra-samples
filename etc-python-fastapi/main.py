@@ -61,7 +61,7 @@ def validate_client_id(client_id, config):
 
 @app.middleware("http")
 async def jwt_middleware(request: Request, call_next, authorization: Annotated[str | None, Header()] = None):
-    if request.get("path") != "/ready":
+    if request.get("path") != "/ready" and request.get("path") != "/":
         config = get_config()
         headers = dict(request.get("headers"))
         token = headers[b'authorization'].decode('utf-8').split("Bearer ")[1]
@@ -69,6 +69,10 @@ async def jwt_middleware(request: Request, call_next, authorization: Annotated[s
         validate_client_id(decoded_token["client_id"], config)
     response = await call_next(request)
     return response
+
+@app.get("/")
+async def home():
+    return ["/ready", "/object/action/1"]
 
 @app.get("/ready")
 async def ready():
