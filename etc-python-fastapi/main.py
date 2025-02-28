@@ -59,18 +59,23 @@ def validate_client_id(client_id, config):
         logger.error(error_msg)
         raise HTTPException(status_code=500, detail=error_msg)
 
+@app.middleware("http")
+async def jwt_middleware(request: Request, call_next, authorization: Annotated[str | None, Header()] = None):
+    if request.get("path") != "/ready":
+        config = get_config()
+        headers = dict(request.get("headers"))
+        token = headers[b'authorization'].decode('utf-8').split("Bearer ")[1]
+        decoded_token = validate_jwt(token, config)
+        validate_client_id(decoded_token["client_id"], config)
+    response = await call_next(request)
+    return response
+
 @app.get("/ready")
 async def ready():
     return "ready"
 
 @app.post("/object/action/1")
-async def object_action_1(request: Request, authorization: Annotated[str | None, Header()] = None):
-    config = get_config()
-    token = authorization.split("Bearer ")[1]
-
-    decoded_token = validate_jwt(token, config)
-    validate_client_id(decoded_token["client_id"], config)
-
+async def object_action_1(request: Request):
     object_entry = await request.json()
     logger.info(object_entry)
 
