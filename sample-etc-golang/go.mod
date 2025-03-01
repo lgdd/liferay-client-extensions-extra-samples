@@ -1,4 +1,4 @@
-module etc-golang
+module sample-etc-golang
 
 go 1.24.0
 

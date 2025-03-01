@@ -216,7 +216,7 @@ wheels = [
 ]
 
 [[package]]
-name = "etc-python-fastapi"
+name = "sample-etc-python-fastapi"
 version = "1.0.0"
 source = { virtual = "." }
 dependencies = [

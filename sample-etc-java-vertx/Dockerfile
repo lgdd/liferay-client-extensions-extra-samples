@@ -1,6 +1,6 @@
 FROM gradle:8.5-jdk21-alpine AS builder
 
-WORKDIR /etc-java-vertx
+WORKDIR /sample-etc-java-vertx
 
 COPY . .
 
@@ -13,7 +13,7 @@ FROM eclipse-temurin:21-alpine
 
 RUN mkdir /opt/app
 
-COPY --from=builder /etc-java-vertx/build/libs/*-fat.jar /opt/app/vertx.jar
+COPY --from=builder /sample-etc-java-vertx/build/libs/*-fat.jar /opt/app/vertx.jar
 
 EXPOSE 8082
 

@@ -7,32 +7,32 @@ services:
       - "8080:8080"
     environment:
       LIFERAY_VIRTUAL_PERIOD_HOSTS_PERIOD_VALID_PERIOD_HOSTS: liferay,localhost,127.0.0.1,[::1],[0:0:0:0:0:0:0:1]
-  etc-golang:
+  sample-etc-golang:
     build:
       dockerfile: Dockerfile
-      context: etc-golang
+      context: sample-etc-golang
     ports:
       - "8126:8126"
     depends_on:
       liferay:
         condition: service_healthy
-  etc-python-fastapi:
+  sample-etc-python-fastapi:
     build:
       dockerfile: Dockerfile
-      context: etc-python-fastapi
+      context: sample-etc-python-fastapi
     ports:
       - "8502:8502"
     environment:
       PROJECT_PROTOCOL: http
-      PROJECT_HOSTNAME: etc-python-fastapi
+      PROJECT_HOSTNAME: sample-etc-python-fastapi
       PROJECT_PORT: 8502
     depends_on:
       liferay:
         condition: service_healthy
-  etc-java-vertx:
+  sample-etc-java-vertx:
     build:
       dockerfile: Dockerfile
-      context: etc-java-vertx
+      context: sample-etc-java-vertx
     ports:
       - "8082:8082"
     depends_on:
