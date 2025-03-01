@@ -5,6 +5,8 @@ in [this repository](https://github.com/lgdd/liferay-client-extensions-samples).
 
 ## Usage
 
+**If you want to create one of those samples in your Liferay workspace from a CLI, checkout [this project](https://github.com/lgdd/lfr-cli).**
+
 You can clone this repository under the `/client-extensions` directory of a Liferay workspace
 
 Or you can clone this repository and directly use `docker compose up --build` to try those extra
