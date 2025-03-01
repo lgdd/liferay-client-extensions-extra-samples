@@ -38,3 +38,12 @@ services:
     depends_on:
       liferay:
         condition: service_healthy
+  sample-etc-java-quarkus:
+    build:
+      dockerfile: Dockerfile
+      context: sample-etc-java-quarkus
+    ports:
+      - "8083:8083"
+    depends_on:
+      liferay:
+        condition: service_healthy

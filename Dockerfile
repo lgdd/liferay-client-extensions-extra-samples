@@ -32,6 +32,7 @@ RUN ./gradlew initBundle
 RUN sed -i -e 's/localhost:8126/sample-etc-golang:8126/g' client-extensions/sample-etc-golang/client-extension.yaml
 RUN sed -i -e 's/localhost:8502/sample-etc-python-fastapi:8502/g' client-extensions/sample-etc-python-fastapi/client-extension.yaml
 RUN sed -i -e 's/localhost:8082/sample-etc-java-vertx:8082/g' client-extensions/sample-etc-java-vertx/client-extension.yaml
+RUN sed -i -e 's/localhost:8083/sample-etc-java-quarkus:8083/g' client-extensions/sample-etc-java-quarkus/client-extension.yaml
 
 RUN ./gradlew clean deploy -PnodeDownload=false
 
