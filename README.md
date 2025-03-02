@@ -5,7 +5,8 @@ in [this repository](https://github.com/lgdd/liferay-client-extensions-samples).
 
 ## Usage
 
-**If you want to create one of those samples in your Liferay workspace from a CLI, checkout [this project](https://github.com/lgdd/lfr-cli).**
+**If you want to create one of those samples in your Liferay workspace from a CLI,
+checkout [this project](https://github.com/lgdd/lfr-cli).**
 
 You can clone this repository under the `/client-extensions` directory of a Liferay workspace
 
@@ -21,3 +22,4 @@ samples.
 | sample-etc-python-fastapi    | 8502     | Python microservice using [FastAPI](https://fastapi.tiangolo.com/) and [PyJWT](https://pyjwt.readthedocs.io/en/stable/)                                           | Python >= 3.10 |
 | sample-etc-java-vertx        | 8082     | Java microservice using [Eclipse Vert.x](https://vertx.io/)                                                                                                       | Java >= 21     |
 | sample-etc-java-quarkus      | 8083     | Java microservice using [Quarkus](https://quarkus.io/), [java-jwt](https://github.com/auth0/java-jwt) and [jwks-rsa-java](https://github.com/auth0/jwks-rsa-java) | Java >= 21     |
+| sample-etc-bun               | 8228     | JavaScript microservice using [Bun](https://quarkus.io/) and [panva/jose](https://github.com/panva/jose)                                                          | TypeScript     |

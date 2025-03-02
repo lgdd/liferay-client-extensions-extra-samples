@@ -47,3 +47,12 @@ services:
     depends_on:
       liferay:
         condition: service_healthy
+  sample-etc-bun:
+    build:
+      dockerfile: Dockerfile
+      context: sample-etc-bun
+    ports:
+      - "8228:8228"
+    depends_on:
+      liferay:
+        condition: service_healthy
