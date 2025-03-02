@@ -18,22 +18,52 @@ import (
 	"github.com/lestrrat-go/jwx/v3/jwt"
 )
 
-var Config = make(map[string]string)
+var (
+	Config              = make(map[string]string)
+	ConfigTreePathsEnvs = []string{"LIFERAY_ROUTES_DXP", "LIFERAY_ROUTES_CLIENT_EXTENSION"}
+)
+
+func getConfigTreePaths() []string {
+	var configTreePaths []string
+
+	for _, env := range ConfigTreePathsEnvs {
+		envPath, envPathExists := os.LookupEnv(env)
+		if envPathExists {
+			slog.Info(fmt.Sprintf("%s: %s", env, envPath))
+			configTreePaths = append(configTreePaths, envPath)
+		}
+	}
+
+	if len(configTreePaths) == 0 {
+		slog.Warn(fmt.Sprintf("No environment variable found for config %s", ConfigTreePathsEnvs))
+		slog.Warn("Default config path to './dxp-metadata'")
+		configTreePaths = append(configTreePaths, "dxp-metadata")
+	}
+
+	return configTreePaths
+}
 
 func initConfig() error {
-	err := filepath.Walk("dxp-metadata", func(path string, info fs.FileInfo, err error) error {
-		if !info.IsDir() {
-			fileContentBytes, err := os.ReadFile(path)
-			if err != nil {
-				return err
-			}
-			Config[info.Name()] = string(fileContentBytes)
-		}
-		return nil
-	})
+	configTreePaths := getConfigTreePaths()
 
-	if err != nil {
-		return err
+	slog.Info("Loading config:")
+
+	for _, configTreePath := range configTreePaths {
+		err := filepath.Walk(configTreePath, func(path string, info fs.FileInfo, err error) error {
+			if !info.IsDir() {
+				fileContentBytes, err := os.ReadFile(path)
+				if err != nil {
+					return err
+				}
+				slog.Info(fmt.Sprintf("- %s=%s", info.Name(), string(fileContentBytes)))
+				Config[info.Name()] = string(fileContentBytes)
+			}
+			return nil
+		})
+
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
