@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/lestrrat-go/jwx/v3/jwk"
 	"github.com/lestrrat-go/jwx/v3/jwt"
@@ -38,6 +39,56 @@ func initConfig() error {
 	return nil
 }
 
+type JWTClaims struct {
+	Subject    string    `json:"sub"`
+	Issuer     string    `json:"iss"`
+	ClientId   string    `json:"client_id"`
+	Audience   []string  `json:"aud"`
+	GrantType  string    `json:"grant_type"`
+	Scope      string    `json:"scope"`
+	Expiration time.Time `json:"exp"`
+	IssuedAt   time.Time `json:"iat"`
+	ID         string    `json:"jti"`
+	Username   string    `json:"username"`
+}
+
+func logDecodedToken(token jwt.Token) {
+	var clientId string
+	var grantType string
+	var scope string
+	var username string
+
+	jti, _ := token.JwtID()
+	sub, _ := token.Subject()
+	iss, _ := token.Issuer()
+	aud, _ := token.Audience()
+	iat, _ := token.IssuedAt()
+	exp, _ := token.Expiration()
+	_ = token.Get("scope", &scope)
+	_ = token.Get("username", &username)
+	_ = token.Get("grant_type", &grantType)
+	_ = token.Get("client_id", &clientId)
+
+	claims := &JWTClaims{
+		Subject:    sub,
+		Issuer:     iss,
+		ClientId:   clientId,
+		Audience:   aud,
+		GrantType:  grantType,
+		Scope:      scope,
+		Expiration: exp,
+		IssuedAt:   iat,
+		ID:         jti,
+		Username:   username,
+	}
+
+	claimsJson, _ := json.Marshal(claims)
+
+	slog.Info(fmt.Sprintf("JWT Claims: %s", string(claimsJson)))
+	slog.Info(fmt.Sprintf("JWT ID: %s", jti))
+	slog.Info(fmt.Sprintf("JWT Subject: %s", sub))
+}
+
 func validateJWT(tokenString string) (jwt.Token, error) {
 	var oauth2JWKSURIBuilder strings.Builder
 
@@ -50,8 +101,6 @@ func validateJWT(tokenString string) (jwt.Token, error) {
 	oauth2JWKSURIBuilder.WriteString("/o/oauth2/jwks")
 
 	response, err := http.Get(oauth2JWKSURIBuilder.String())
-
-	slog.Info(fmt.Sprintf("JWT: %s", tokenString))
 
 	if err != nil {
 		return nil, err
@@ -82,6 +131,8 @@ func validateJWT(tokenString string) (jwt.Token, error) {
 			if err != nil {
 				return nil, err
 			}
+
+			logDecodedToken(token)
 
 			return token, nil
 
