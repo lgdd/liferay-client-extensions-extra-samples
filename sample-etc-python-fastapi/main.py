@@ -28,8 +28,6 @@ def validate_jwt(token_str, config):
     domain = config["com.liferay.lxc.dxp.mainDomain"]
     oauth2_jwks_uri = protocol + "://" + domain + "/o/oauth2/jwks"
 
-    logger.info("JWT: " + token_str)
-
     jwks_response = requests.get(oauth2_jwks_uri)
     jwk_json = jwks_response.json()["keys"][0]
     jwk_json_str = str(jwk_json).replace("'", "\"")
@@ -43,7 +41,11 @@ def validate_jwt(token_str, config):
 
     jwk = PyJWK.from_json(jwk_json_str, algorithm=alg)
 
-    return jwt.decode(jwt=token_str, key=jwk, algorithms=[alg], audience=aud)
+    decoded_token = jwt.decode(jwt=token_str, key=jwk, algorithms=[alg], audience=aud)
+
+    logger.info("Decoded JWT: " + json.dumps(decoded_token))
+
+    return decoded_token
 
 def validate_client_id(client_id, config):
     protocol = config["com.liferay.lxc.dxp.server.protocol"]
