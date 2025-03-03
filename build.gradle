@@ -1,6 +1,0 @@
-apply plugin: "com.liferay.node"
-
-node {
-	nodeVersion = "20.10.0"
-	global = false
-}
