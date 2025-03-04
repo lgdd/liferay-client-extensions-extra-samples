@@ -1,3 +1,5 @@
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lgdd/liferay-client-extensions-extra-samples/build.yml)
+
 # Liferay Client Extensions Extra Samples
 
 Unofficial additional client extensions samples to complete the official samples that are mirrored
