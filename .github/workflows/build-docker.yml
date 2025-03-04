@@ -1,0 +1,14 @@
+name: build-docker
+run-name: Build Docker
+
+on:
+  push:
+
+jobs:
+  build-docker:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Docker Compose
+        run: |
+          docker compose build

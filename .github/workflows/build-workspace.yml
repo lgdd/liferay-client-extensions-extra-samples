@@ -1,0 +1,26 @@
+name: build-workspace
+run-name: Build Workspace
+
+on:
+  push:
+
+jobs:
+  build-workspace:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Blade
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/liferay/liferay-blade-cli/master/cli/installers/local | bash
+          echo "/home/runner/jpm/bin" >> $GITHUB_PATH
+      - name: Create Liferay Workspace
+        run: |
+          blade init -v dxp-2025.q1.0-lts workspace
+          mkdir -p workspace/client-extensions
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: workspace/client-extensions
+      - name: Build
+        working-directory: ./workspace
+        run: |
+          ./gradlew build
